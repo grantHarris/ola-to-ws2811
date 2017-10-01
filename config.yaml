@@ -1,0 +1,30 @@
+---
+mapping:
+- size: 168
+  input:
+    universe: 0
+    address: 1
+  output:
+    port: PWM0
+    index: 0
+- size: 168
+  input:
+    universe: 1
+    address: 1
+  output:
+    port: PWM0
+    index: 167
+- size: 168
+  input:
+    universe: 2
+    address: 1
+  output:
+    port: PWM0
+    index: 335
+- size: 168
+  input:
+    universe: 3
+    address: 1
+  output:
+    port: PWM0
+    index: 503
