@@ -3,12 +3,12 @@
 #include <ola/client/ClientWrapper.h>
 #include <string>
 
-#include "../lib/clk.h"
-#include "../lib/gpio.h"
-#include "../lib/dma.h"
-#include "../lib/pwm.h"
-#include "../lib/version.h"
-#include "../lib/ws2811.h"
+#include "lib/clk.h"
+#include "lib/gpio.h"
+#include "lib/dma.h"
+#include "lib/pwm.h"
+#include "lib/version.h"
+#include "lib/ws2811.h"
 //#include "lib/yaml.h"
 
 #define TARGET_FREQ             WS2811_TARGET_FREQ
