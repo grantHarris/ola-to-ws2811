@@ -27,31 +27,26 @@ void RegisterComplete(const ola::client::Result& result) {
 void Receive(const ola::client::DMXMetadata &metadata, const ola::DmxBuffer &data) {
 
 	ws2811_return_t ret;
-	int strip_channel, start_address;
+	int strip_channel, start_address, total_rgb_channels, end_address, start_address_offset;
 
-	for(YAML::const_iterator it=config["mapping"][metadata.universe].begin(); it!=config["mapping"][metadata.universe].end(); ++it) {
-		std::cout << "hey there!" << it->second <<std::endl;
+	for(YAML::const_iterator it = config["mapping"][metadata.universe].begin(); it != config["mapping"][metadata.universe].end(); ++it) {
+		const YAML::Node& entry = *it;
+		strip_channel = entry["output"]["strip_channel"].as<int>();
+		start_address = std::max(0, std::min(entry["input"]["start_address"].as<int>() - 1, 511));
+		total_rgb_channels = std::max(0, std::min(entry["input"]["total_rgb_channels"].as<int>() - 1, 511));
+		end_address = std::max(0, std::min(total_rgb_channels - start_address, 511));
+		start_address_offset = entry["output"]["start_address"].as<int>();
 
+		for(std::size_t i = start_address; i < end_address; i++){
+			output.channel[strip_channel].leds[i + start_address_offset] = (uint32_t) data.Get(i * 3) << 16 |
+			(uint32_t) data.Get(i * 3 + 1) << 8 |
+			(uint32_t) data.Get(i * 3 + 2);
+		}
 	}
 
-	// for(YAML::const_iterator it = config["mapping"][metadata.universe].begin(); it != config["mapping"][metadata.universe].end(); ++it) {
-	// 	int strip_channel = it->second["output"]["strip_channel"].as<int>();
-	// 	std::cout<<strip_channel;
-	// 	// int start_address = std::max(0, std::min(it->second["output"]["start_address"].as<int>() - 1, 511));
-	// 	// int total_rgb_channels = std::max(0, std::min(it->second["output"]["total_rgb_channels"].as<int>() - 1, 511));
-
-	// 	// int end_address = std::max(0, std::min(total_rgb_channels - start_address, 511));
-
-	// 	// for(std::size_t i = start_address; i < end_address; i++){
-	// 	// 	output.channel[strip_channel].leds[i] = (uint32_t) data.Get(i * 3) << 16 |
-	// 	// 	(uint32_t) data.Get(i * 3 + 1) << 8 |
-	// 	// 	(uint32_t) data.Get(i * 3 + 2);
-	// 	// }
-	// }
-
-	// if ((ret = ws2811_render(&output)) != WS2811_SUCCESS){
-	// 	std::cout << "ws2811_render failed:" << ws2811_get_return_t_str(ret);
-	// }
+	if ((ret = ws2811_render(&output)) != WS2811_SUCCESS){
+		std::cout << "ws2811_render failed:" << ws2811_get_return_t_str(ret);
+	}
 }
 
 int main() {
