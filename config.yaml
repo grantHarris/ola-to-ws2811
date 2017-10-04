@@ -1,30 +1,37 @@
 ---
+strip_channel:
+  0:
+    gpionum: 21
+    count: 680
+    invert: 0
+    brightness: 255
+    strip_type: WS2811_STRIP_GRB
 mapping:
-- size: 168
-  input:
-    universe: 0
-    address: 1
-  output:
-    port: PWM0
-    index: 0
-- size: 168
-  input:
-    universe: 1
-    address: 1
-  output:
-    port: PWM0
-    index: 167
-- size: 168
-  input:
-    universe: 2
-    address: 1
-  output:
-    port: PWM0
-    index: 335
-- size: 168
-  input:
-    universe: 3
-    address: 1
-  output:
-    port: PWM0
-    index: 503
+  0:
+  - input:
+      start_address: 1
+      total_rgb_channels: 170
+    output:
+      start_address: 1
+      strip_channel: 0
+  1:
+  - input:
+      start_address: 1
+      total_rgb_channels: 170
+    output:
+      start_address: 170
+      strip_channel: 0
+  2:
+  - input:
+      start_address: 1
+      total_rgb_channels: 170
+    output:
+      start_address: 340
+      strip_channel: 0
+  3:
+  - input:
+      start_address: 1
+      total_rgb_channels: 170
+    output:
+      start_address: 510
+      strip_channel: 0
