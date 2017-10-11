@@ -12,26 +12,26 @@ mapping:
       start_address: 1
       total_rgb_channels: 170
     output:
-      start_address: 1
+      start_address: 0
       strip_channel: 0
   1:
   - input:
       start_address: 1
       total_rgb_channels: 170
     output:
-      start_address: 170
+      start_address: 169
       strip_channel: 0
   2:
   - input:
       start_address: 1
       total_rgb_channels: 170
     output:
-      start_address: 340
+      start_address: 339
       strip_channel: 0
   3:
   - input:
       start_address: 1
       total_rgb_channels: 170
     output:
-      start_address: 510
+      start_address: 509
       strip_channel: 0
